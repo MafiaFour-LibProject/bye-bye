@@ -46,7 +46,7 @@ function App() {
       ],
     },
     {
-      path: "/ad/:id",
+      path: "/ads/:id",
       element: <AdDetails />,
     },
   ]);
