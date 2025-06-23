@@ -8,10 +8,15 @@ import SignupPage from "./pages/SignupPage";
 
 function App() {
   const router = createBrowserRouter([ 
-   {
-      path: "/",
-      element: <LandingPage/>
-    },
+    {
+    path: "/",
+   element: <LandingPage/>
+   },
+
+    // {
+    //   path:"/about",
+    //  element:<AboutUsPage/>
+    // },
 
 {
   path:"/ads",
