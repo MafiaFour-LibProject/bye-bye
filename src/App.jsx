@@ -51,6 +51,11 @@ function App() {
     },
   ]);
 
+    // {
+    //   path:"/about",
+    //  element:<AboutUsPage/>
+    // },
+
   return <RouterProvider router={router} />;
 }
 
