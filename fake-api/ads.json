@@ -1,0 +1,70 @@
+{
+  "ads": [
+    {
+      "id": "1",
+      "title": "Vintage Camera",
+      "description": "Classic film camera, still works better than the relationship. Comes with lenses and a leather case, unlike her emotional baggage.",
+      "image": "https://cdn.pixabay.com/photo/2014/12/12/22/08/glass-565914_640.jpg",
+      "price": 150,
+      "condition": "used",
+      "category": "Electronics",
+      "available": true,
+      "vendorId": "vendor123"
+    },
+    {
+      "id": "2",
+      "title": "Handmade Wooden Chair",
+      "description": "Solid wood, handcrafted, unlike his effort. Great for sitting with your regrets or just your cat",
+      "image": "https://cdn.pixabay.com/photo/2014/12/12/22/08/glass-565914_640.jpg",
+      "price": 85.5,
+      "condition": "new",
+      "category": "Furniture",
+      "available": true,
+      "vendorId": "vendor123"
+    },
+    {
+      "id": "3",
+      "title": "Mountain Bike",
+      "description": "Smooth gears, strong brakes, zero emotional damage. Take this and ride far away from toxic energy.",
+      "image": "https://cdn.pixabay.com/photo/2014/12/12/22/08/glass-565914_640.jpg",
+      "price": 420,
+      "condition": "slightly-used",
+      "category": "Sports",
+      "available": true,
+      "vendorId": "vendor456"
+    },
+    {
+      "id": "4",
+      "title": "Designer Handbag",
+      "description": "Premium leather, never betrayed me. Spacious enough to hold essentials or emotional baggage.",
+      "image": "https://cdn.pixabay.com/photo/2014/12/12/22/08/glass-565914_640.jpg",
+      "price": 299.99,
+      "condition": "like-new",
+      "category": "Fashion",
+      "available": true,
+      "vendorId": "vendor123"
+    },
+    {
+      "id": "5",
+      "title": "Antique Bookshelf",
+      "description": "Gorgeous hand-carved oak that deserves a new home - one with someone who actually follows through.",
+      "image": "https://cdn.pixabay.com/photo/2014/12/12/22/08/glass-565914_640.jpg",
+      "price": 350,
+      "condition": "used",
+      "category": "Home Decor",
+      "available": false,
+      "vendorId": "vendor456"
+    },
+    {
+      "id": "4b43",
+      "title": "hheirhier",
+      "description": "oejoreo",
+      "price": 5,
+      "category": "Home",
+      "condition": "new",
+      "image": "https://cdn.pixabay.com/photo/2014/12/12/22/08/glass-565914_640.jpg",
+      "available": true,
+      "vendorId": "vendor123"
+    }
+  ]
+}
