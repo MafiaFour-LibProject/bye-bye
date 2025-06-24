@@ -11,14 +11,14 @@ const UserLayout = () => {
 
   return (
     <div className="flex min-h-screen">
-      <UserSidebar
+      {/* <UserSidebar
         isSidebarOpen={isSidebarOpen}
         toggleSidebar={toggleSidebar}
-      />
+      /> */}
       <main
-        className={`flex-1 p-8 transition-all duration-300 ${
-          isSidebarOpen ? "ml-64" : "ml-16"
-        }`}
+      // className={`flex-1 p-8 transition-all duration-300 ${
+      //   isSidebarOpen ? "ml-64" : "ml-16"
+      // }`}
       >
         <Outlet />
       </main>

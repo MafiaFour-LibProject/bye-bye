@@ -23,13 +23,13 @@ const VendorSidebar = ({ isSidebarOpen, toggleSidebar }) => {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-full  bg-white text-black flex flex-col p-3 shadow-lg z-40 transition-all duration-300
+      className={`fixed mt-10 top-0 left-0 h-full  bg-white text-black flex flex-col p-3 shadow-lg z-40 transition-all duration-300
         ${isSidebarOpen ? "w-64" : "w-20"}`}
     >
       <div className="flex justify-between items-center w-full mb-8">
         {isSidebarOpen && (
           <img
-            className="h-[100px] w-[100px] object-cover"
+            className="h-[150px] w-[150px] object-cover"
             src="/images/bb-store-logo2.png"
             alt="BB Store Logo"
           />

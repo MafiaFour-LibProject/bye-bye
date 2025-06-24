@@ -18,8 +18,8 @@ const UserSidebar = ({ isSidebarOpen, toggleSidebar }) => {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-full bg-slate-800 text-white flex flex-col p-4 shadow-lg z-40 transition-all duration-300
-        ${isSidebarOpen ? "w-44" : "w-20 items-center"}`}
+      className={` fixed mt-10 top-0 left-0 h-full bg-white text-black flex flex-col p-4 shadow-lg z-50 transition-all duration-300
+        ${isSidebarOpen ? "w-64" : "w-20 items-center"}`}
     >
       <div className="flex justify-between items-center w-full mb-8">
         {isSidebarOpen && (
@@ -35,9 +35,9 @@ const UserSidebar = ({ isSidebarOpen, toggleSidebar }) => {
           aria-label={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
         >
           {isSidebarOpen ? (
-            <ChevronLeft className="h-6 w-6" />
+            <ChevronLeft className="h-6 w-6 text-white bg-pink-600 rounded" />
           ) : (
-            <ChevronRight className="h-6 w-6" />
+            <ChevronRight className="h-6 w-6 text-white bg-pink-600" />
           )}
         </button>
       </div>

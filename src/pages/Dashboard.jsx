@@ -22,7 +22,6 @@ function Dashboard() {
     const token = localStorage.getItem("accessToken");
     if (!token) {
       navigate("/login");
-      n;
     }
   }, []);
 
