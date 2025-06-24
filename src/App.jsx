@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -7,6 +8,8 @@ import AdDetails from "./pages/AdDetails";
 import Dashboard from "./pages/Dashboard";
 import VendorLayout from "./components/VendorLayout";
 import UserLayout from "./components/UserLayout";
+import AboutUsPage from "./pages/AboutUsPage";
+import UserNavbar from "./components/UserNavbar";
 import "./App.css";
 
 function App() {
@@ -49,12 +52,20 @@ function App() {
       path: "/ads/:id",
       element: <AdDetails />,
     },
-  ]);
 
-    // {
-    //   path:"/about",
-    //  element:<AboutUsPage/>
-    // },
+    {
+      path: "/about",
+      element: <AboutUsPage />,
+    },
+
+  {
+      path: "/usernavbar",
+      element: <UserNavbar />,
+    },
+
+
+    
+  ]);
 
   return <RouterProvider router={router} />;
 }
