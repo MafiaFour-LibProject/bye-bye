@@ -11,6 +11,7 @@ import UserLayout from "./components/UserLayout";
 import AboutUsPage from "./pages/AboutUsPage";
 import UserNavbar from "./components/UserNavbar";
 import "./App.css";
+import Footer from "./components/Footer";
 
 function App() {
   const router = createBrowserRouter([
@@ -53,19 +54,16 @@ function App() {
       element: <AdDetails />,
     },
 
+
     {
       path: "/about",
       element: <AboutUsPage />,
     },
 
-  {
-      path: "/usernavbar",
-      element: <UserNavbar />,
-    },
-
-
-    
   ]);
+
+ 
+
 
   return <RouterProvider router={router} />;
 }

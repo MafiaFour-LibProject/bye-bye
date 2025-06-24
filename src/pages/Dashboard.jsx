@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import axios from "axios";
 import CreateAdModal from "../components/modal/CreateAdModal"; // Import the CreateAdModal
 
@@ -14,6 +15,17 @@ const categories = [
 ];
 
 function Dashboard() {
+  // WORK ON THIS///////////////////
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      navigate("/login");
+      n;
+    }
+  }, []);
+
   const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
