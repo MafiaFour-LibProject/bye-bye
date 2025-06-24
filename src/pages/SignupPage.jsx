@@ -1,4 +1,43 @@
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router";
+import { data } from "react-router";
+import { ApiSignUp } from "../services/auth";
+import { toast } from "react-toastify";
+import { useState } from "react";
+
 const SignupPage = () => {
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = async (data) => {
+    const payload = {
+      name: data.name,
+      role: data.role,
+      // username: data.username,
+      email: data.email,
+      password: data.password,
+    };
+
+    setIsSubmitting(true);
+
+    try {
+      const res = await ApiSignUp(payload);
+      console.log(res);
+      toast.success("User registered successfully");
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.message) || "Oops! An error Occured.";
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  const isError = Object.keys(errors).length > 0;
+
   return (
     <div className="my-[30px] mx-[200px] flex flex-col md:flex-row items-center justify-center px-6 py-10 bg-white shadow-2xl rounded-2xl">
       <div className="w-full md:w-1/2 max-w-md">
@@ -9,7 +48,10 @@ const SignupPage = () => {
           Get Started
         </h2>
 
-        <form className="bg-gray-50 h-screen p-[20px] rounded-lg space-y-6">
+        <form
+          className="bg-gray-50 h-screen p-[20px] rounded-lg space-y-6"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="flex flex-col space-y-1">
             <label className="text-base font-medium" htmlFor="name">
               Name
@@ -17,39 +59,52 @@ const SignupPage = () => {
             <input
               className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-3"
               type="text"
-              name="name"
               placeholder="Name"
-              required
+              id="name"
+              {...register("name", { required: "name is required" })}
             />
+            {errors?.name && (
+              <span className="text-red-600">{errors.name.message}</span>
+            )}
           </div>
 
+          {/* <div className="flex flex-col space-y-2">
+            <label className="text-base font-medium" htmlFor="username">
+              Username
+            </label>
+            <input
+              className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-8 text-gray-500"
+              type="text"
+              id="username"
+              {...register("username", { required: "username is required" })}
+            />
+            {errors?.userName && (
+              <span userName="text-red-600">{errors.UserName.message}</span>
+            )}
+          </div> */}
+
           <div className="flex flex-row justify-between">
-            <div className="flex flex-col space-y-2">
+            {/* <div className="flex flex-col space-y-2">
               <label className="text-base font-medium" htmlFor="dob">
                 Date of Birth
               </label>
               <input
                 className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-8 text-gray-500"
                 type="date"
-                name="dob"
-                required
+                id="dob"
+                {...register("dob", { required: "date of birth is required" })}
               />
-            </div>
+            </div> */}
 
             <div className="flex flex-col space-y-2">
-              <label htmlFor="Gender">Gender</label>
+              <label htmlFor="Gender">Role</label>
               <select
-                type
                 className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-8 text-gray-500"
-                name="gender"
-                id="gender"
+                id="role"
+                {...register("role", { required: "role is required" })}
               >
-                <option value="male" name="male">
-                  Male
-                </option>
-                <option value="female" name="female">
-                  Female
-                </option>
+                <option value="user">User</option>
+                <option value="vendor">Vendor</option>
               </select>
             </div>
           </div>
@@ -61,9 +116,9 @@ const SignupPage = () => {
             <input
               className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-3"
               type="email"
-              name="email"
+              id="email"
+              {...register("email", { required: "email is required" })}
               placeholder="Email"
-              required
             />
           </div>
 
@@ -74,30 +129,41 @@ const SignupPage = () => {
             <input
               className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-3"
               type="password"
-              name="password"
+              id="password"
+              {...register("password", { required: "password is required" })}
               placeholder="********"
-              required
             />
+            {errors?.password && (
+              <span password="text-red-600">{errors.password.message}</span>
+            )}
           </div>
 
-          <div className="flex flex-col space-y-2">
-            <label htmlFor="password" className="text-base font-medium">
+          {/* <div className="flex flex-col space-y-2">
+            <label htmlFor="confirmPassword" className="text-base font-medium">
               Confirm Password
             </label>
             <input
               className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-3"
               type="password"
-              name="password"
               placeholder="********"
-              required
+              id="confirmPassword"
             />
-          </div>
+            {errors?.confirmPassword && (
+              <span confirmPassword="text-red-600">
+                {errors.confirmPassword.message}
+              </span>
+            )}
+          </div> */}
 
           <button
-            style={{ backgroundColor: "#E74C3C" }}
-            className="w-full text-white font-semibold text-base py-2 rounded"
+            type="submit"
+            disabled={isError}
+            onClick={handleSubmit}
+            className={`${
+              isError ? "bg-gray-300 cursor-not-allowed" : "bg-[#E74C3C]"
+            }  "w-full text-white font-semibold text-base py-2  px-3`}
           >
-            Sign Up
+            {isSubmitting ? "Submitting...." : " Sign Up"}
           </button>
 
           <p className="text-base text-center">

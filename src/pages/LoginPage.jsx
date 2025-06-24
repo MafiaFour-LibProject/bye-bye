@@ -1,31 +1,61 @@
-import React, { useState, useRef } from "react";
-const loginImage = "/portfolio.jpg";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom"; // Use react-router-dom not react-router
+import { ApiLogin } from "../services/auth";
+import { toast } from "react-toastify";
 
 function App() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const emailInputRef = useRef(null);
-  const Image2 = "/Image2.jpg";
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("Login button clicked!");
-    console.log("Email:", email);
-    console.log("Password:", password);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = async (data) => {
+    const payload = {
+      email: data.email,
+      password: data.password,
+    };
+
+    setIsSubmitting(true);
+
+    try {
+      const res = await ApiLogin(payload);
+      console.log(res);
+      localStorage.setItem("accessToken", res.data.token);
+      const userRole = res.data.user.role;
+      toast.success("Login successful!");
+
+      if (userRole == "vendor") {
+        navigate("/vendor-ads");
+      } else {
+        navigate("/user-ads");
+      }
+
+      navigate("/user-ads");
+    } catch (error) {
+      console.error(error);
+      toast.error(error?.message || "Oops! An error occurred.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  const isError = Object.keys(errors).length > 0;
 
   return (
     <div className="bg-neutral-200 flex items-center justify-center min-h-screen p-4">
       <div className="bg-white p-8 rounded-lg shadow-xl flex flex-col md:flex-row max-w-4xl w-full overflow-hidden">
-        {
-          <div className="md:w-1/2 hidden md:block">
-            <img
-              src="/Image4.jpg"
-              alt="A cool picture for the login page"
-              className="rounded-lg object-cover h-full w-full"
-            />
-          </div>
-        }
+        <div className="md:w-1/2 hidden md:block">
+          <img
+            src="/Black2.jpg"
+            alt="A cool picture for the login page"
+            className="rounded-lg object-cover h-full w-full"
+          />
+        </div>
 
         <div className="w-full md:w-1/2 p-4 flex flex-col justify-center">
           <h2 className="text-4xl font-extrabold text-gray-900 mb-4 text-center">
@@ -35,7 +65,7 @@ function App() {
             Sign in to your account
           </p>
 
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-5">
               <label
                 htmlFor="email"
@@ -46,12 +76,15 @@ function App() {
               <input
                 type="email"
                 id="email"
-                name="email"
-                placeholder="your@example.com"
+                {...register("email", { required: "Email is required" })}
+                placeholder="name@gmail.com"
                 className="shadow-sm appearance-none border border-gray-300 rounded-md w-full py-2.5 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
               />
+              {errors.email && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.email.message}
+                </p>
+              )}
             </div>
 
             <div className="mb-6">
@@ -64,19 +97,27 @@ function App() {
               <input
                 type="password"
                 id="password"
-                name="password"
+                {...register("password", { required: "Password is required" })}
                 placeholder="••••••••"
                 className="shadow-sm appearance-none border border-gray-300 rounded-md w-full py-2.5 px-4 text-gray-700 mb-3 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 ease-in-out"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
               />
+              {errors.password && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
 
             <button
               type="submit"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full transition duration-300 ease-in-out transform hover:scale-105"
+              disabled={isSubmitting || isError}
+              className={`${
+                isSubmitting || isError
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-blue-600 hover:bg-blue-700"
+              } text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 w-full transition duration-300 ease-in-out transform hover:scale-105`}
             >
-              Log In
+              {isSubmitting ? "Submitting..." : "Log In"}
             </button>
           </form>
 
