@@ -21,7 +21,6 @@ function CreateAdModal({ isOpen, onClose, onAdCreated }) {
   const [image, setImage] = useState("");
   const [available, setAvailable] = useState(true);
 
-  // Effect to manage body scroll
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -67,11 +66,11 @@ function CreateAdModal({ isOpen, onClose, onAdCreated }) {
           onAdCreated();
         }
       } else {
-        alert("Failed to post advert.");
+        alert("Failed to post ad.");
       }
     } catch (error) {
       console.error("Error posting ad:", error);
-      alert("An error occurred while posting the advert.");
+      alert("An error occurred while posting the ad.");
     }
   };
 
@@ -84,7 +83,7 @@ function CreateAdModal({ isOpen, onClose, onAdCreated }) {
   return (
     <div
       id="modal-overlay"
-      className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/30 backdrop-black flex items-center justify-center z-50 p-4"
       onClick={handleOverlayClick}
     >
       <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg relative max-h-[90vh] overflow-y-auto">
@@ -195,7 +194,6 @@ function CreateAdModal({ isOpen, onClose, onAdCreated }) {
               <option value="like-new">Like New</option>
               <option value="slightly-used">Slightly Used</option>
               <option value="used">Used</option>
-              <option value="for-parts">For Parts</option>
             </select>
           </div>
 
