@@ -8,6 +8,7 @@ import Dashboard from "./pages/Dashboard";
 import VendorLayout from "./components/VendorLayout";
 import UserLayout from "./components/UserLayout";
 import "./App.css";
+import Footer from "./components/Footer";
 
 function App() {
   const router = createBrowserRouter([
@@ -49,12 +50,17 @@ function App() {
       path: "/ads/:id",
       element: <AdDetails />,
     },
+
+    {
+      path: "/footer",
+      element: <Footer />,
+    },
   ]);
 
-    // {
-    //   path:"/about",
-    //  element:<AboutUsPage/>
-    // },
+  // {
+  //   path:"/about",
+  //  element:<AboutUsPage/>
+  // },
 
   return <RouterProvider router={router} />;
 }

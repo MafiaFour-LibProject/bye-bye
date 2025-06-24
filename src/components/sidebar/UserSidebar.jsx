@@ -1,7 +1,14 @@
 import { Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight } from "lucide-react"; // Or your preferred icon library
+import { useNavigate } from "react-router-dom";
 
 const UserSidebar = ({ isSidebarOpen, toggleSidebar }) => {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    navigate("/login");
+  };
+
   const userInfo = {
     name: "Mafia User",
     email: "mafiaUser@gmail.com",
@@ -11,14 +18,16 @@ const UserSidebar = ({ isSidebarOpen, toggleSidebar }) => {
 
   return (
     <aside
-      className={`fixed top-0 left-0 h-full bg-green-700 text-white flex flex-col p-4 shadow-lg z-40 transition-all duration-300
-        ${isSidebarOpen ? "w-64" : "w-16 items-center"}`}
+      className={`fixed top-0 left-0 h-full bg-slate-800 text-white flex flex-col p-4 shadow-lg z-40 transition-all duration-300
+        ${isSidebarOpen ? "w-44" : "w-20 items-center"}`}
     >
       <div className="flex justify-between items-center w-full mb-8">
         {isSidebarOpen && (
-          <h2 className="text-2xl font-bold text-green-300 whitespace-nowrap">
-            User Browse
-          </h2>
+          <img
+            className="h-[100px] w-[100px] object-cover"
+            src="/images/bb-store-logo3.png"
+            alt="BB Store Logo"
+          />
         )}
         <button
           onClick={toggleSidebar}
@@ -76,6 +85,9 @@ const UserSidebar = ({ isSidebarOpen, toggleSidebar }) => {
           />
         )}
       </div>
+      <button className="bg-pink-500" onClick={handleLogout}>
+        Log Out
+      </button>
     </aside>
   );
 };
