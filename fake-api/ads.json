@@ -54,17 +54,6 @@
       "category": "Home Decor",
       "available": false,
       "vendorId": "vendor456"
-    },
-    {
-      "id": "4b43",
-      "title": "hheirhier",
-      "description": "oejoreo",
-      "price": 5,
-      "category": "Home",
-      "condition": "new",
-      "image": "https://cdn.pixabay.com/photo/2015/08/10/20/14/handbag-883113_640.jpg",
-      "available": true,
-      "vendorId": "vendor123"
     }
   ]
 }

@@ -40,30 +40,30 @@ function App() {
         },
       ],
     },
+    // {
+    //   element: <UserLayout />,
+    //   children: [
+    //     {
+    //       path: "/user-ads",
+    //       element: <AdsPage />,
+    //     },
+    //   ],
+    // },
+
     {
-      element: <UserLayout />,
-      children: [
-        {
-          path: "/user-ads",
-          element: <AdsPage />,
-        },
-      ],
+      path: "/user-ads",
+      element: <AdsPage />,
     },
     {
       path: "/ads/:id",
       element: <AdDetails />,
     },
 
-
     {
       path: "/about",
       element: <AboutUsPage />,
     },
-
   ]);
-
- 
-
 
   return <RouterProvider router={router} />;
 }

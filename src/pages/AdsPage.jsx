@@ -98,8 +98,8 @@ function AdsPage() {
 
   return (
     <PagesLayout>
-      <div className="bg-gradient-to-b from-white via-pink-50 to-white min-h-screen">
-        <div className="container mx-auto p-4 md:p-6 lg:p-8">
+      <div className="mt-15 w-full bg-gradient-to-b  min-h-screen flex justify-center">
+        <div className="container w-full p-4 md:p-6 lg:p-8">
           <h1 className="text-5xl font-extrabold text-pink-700 drop-shadow-sm mb-2 text-center">
             Bye-Bye Store: Fresh Finds
           </h1>
