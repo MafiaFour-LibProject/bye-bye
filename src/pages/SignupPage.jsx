@@ -39,17 +39,17 @@ const SignupPage = () => {
   const isError = Object.keys(errors).length > 0;
 
   return (
-    <div className="my-[30px] mx-[200px] flex flex-col md:flex-row items-center justify-center px-6 py-10 bg-white shadow-2xl rounded-2xl">
-      <div className="w-full md:w-1/2 max-w-md">
+    <div className="my-[30px] mx-[200px] flex flex-col md:flex-row items-center justify-center px-6 py-10 bg-white shadow-2xl rounded-2xl ">
+      <div className="w-full md:w-1/2 max-w-md mt-9">
         <h2
           style={{ color: "#E74C3C" }}
-          className="font-bold text-4xl text-center mb-6"
+          className="font-bold text-4xl text-center  justify-center mb-9"
         >
           Get Started
         </h2>
 
         <form
-          className="bg-gray-50 h-screen p-[20px] rounded-lg space-y-6"
+          className=" h-screen p-[20px] w-full object-cover rounded-lg space-y-2"
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col space-y-1">
@@ -96,10 +96,10 @@ const SignupPage = () => {
               />
             </div> */}
 
-            <div className="flex flex-col space-y-2">
+            <div className="flex flex-col space-y-2 w-2xl">
               <label htmlFor="Gender">Role</label>
               <select
-                className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-8 text-gray-500"
+                className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-3 text-gray-500 w-full"
                 id="role"
                 {...register("role", { required: "role is required" })}
               >
@@ -180,8 +180,8 @@ const SignupPage = () => {
 
       <div className="hidden md:block md:w-1/2">
         <img
-          className="w-full h-auto object-cover max-h-[600px]"
-          src="/images/sign-up-image.png"
+          className="w-full h-auto object-cover max-h-[600px] rounded-2xl"
+          src="/Black1.jpg"
           alt="Sign Up"
         />
       </div>

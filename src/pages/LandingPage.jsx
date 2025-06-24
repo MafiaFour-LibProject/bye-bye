@@ -10,12 +10,12 @@ const HeroSection = () => {
         loop
         playsInline
       >
-        <source src="/Vid5g.mp4" type="video/mp4" />
+        <source src="/Vid2.mp4" type="video/mp4" />
         
       </video>
 
      
-      <div className="absolute inset-0  bg-opacity-50 flex flex-col items-center justify-center text-orange-600 p-4">
+      <div className="absolute inset-0    git push --set-upstream origin navbar flex flex-col items-center justify-center text-orange-600 p-4">
         <h1 className="text-9xl font-bold mb-2 ">B-BStore</h1>
         <p className="text-black     text-center mb-4 max-w-md text-2xl">
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt,
