@@ -4,88 +4,69 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import PagesLayout from "../components/PagesLayout";
 import { View } from "lucide-react";
+import { apiFetchAdverts } from "../services/advert";
+import EmptyState from "../components/EmptyState";
 
-const categories = [
-  "Electronics",
-  "Vehicles",
-  "Home Appliances",
-  "Fashion",
-  "Sports",
-  "Books",
-  "Other",
-];
+const categories = ["Jewellery", "Perfume", "Beauty", "Fashion", "Other"];
 
 function AdsPage() {
   const [ads, setAds] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [dateFilter, setDateFilter] = useState("");
 
-  const fetchAds = useCallback(async () => {
+  const fetchAds = async () => {
     setLoading(true);
     setError(null);
     try {
       const params = {};
 
       if (searchTerm) {
-        params.q = searchTerm;
+        params.search = searchTerm;
       }
       if (selectedCategory) {
         params.category = selectedCategory;
       }
       if (minPrice) {
-        params.price_gte = parseFloat(minPrice);
+        params.minPrice = parseFloat(minPrice);
       }
       if (maxPrice) {
-        params.price_lte = parseFloat(maxPrice);
-      }
-      if (dateFilter) {
-        const now = new Date();
-        let dateCutoff = new Date();
-        if (dateFilter === "24h") {
-          dateCutoff.setHours(now.getHours() - 24);
-        } else if (dateFilter === "7d") {
-          dateCutoff.setDate(now.getDate() - 7);
-        } else if (dateFilter === "30d") {
-          dateCutoff.setDate(now.getDate() - 30);
-        }
-        params.createdAt_gte = dateCutoff.toISOString();
+        params.maxPrice = parseFloat(maxPrice);
       }
 
-      params._sort = "createdAt";
-      params._order = "desc";
-
-      const response = await axios.get("http://localhost:5000/ads", { params });
-      setAds(response.data);
+      const response = await apiFetchAdverts(params);
+      console.log("fetched data:", response.data);
+      setAds(response.data.adverts);
     } catch (err) {
       console.error("Error fetching ads:", err);
       setError("Failed to load advertisements. Please try again later.");
     } finally {
       setLoading(false);
     }
-  }, [searchTerm, selectedCategory, minPrice, maxPrice, dateFilter]);
+  };
 
   useEffect(() => {
     fetchAds();
-  }, [fetchAds]);
+  }, []);
+
+  const handleSearch = () => {
+    fetchAds();
+  };
 
   const handleResetFilters = () => {
     setSearchTerm("");
     setSelectedCategory("");
     setMinPrice("");
     setMaxPrice("");
-    setDateFilter("");
   };
 
   if (loading)
     return (
       <div className="flex justify-center items-center min-h-[calc(100vh-64px)]">
-        <div className="text-xl text-gray-700">Loading advertisements...</div>
+        <div className="w-12 h-12 border-4 border-pink-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
 
@@ -98,13 +79,13 @@ function AdsPage() {
 
   return (
     <PagesLayout>
-      <div className="mt-15 w-full bg-gradient-to-b  min-h-screen flex justify-center">
+      <div className=" w-full bg-gradient-to-b  min-h-screen flex justify-center">
         <div className="container w-full p-4 md:p-6 lg:p-8">
           <h1 className="text-5xl font-extrabold text-pink-700 drop-shadow-sm mb-2 text-center">
             Bye-Bye Store: Fresh Finds
           </h1>
           <p className="text-lg font-semibold text-pink-400 text-center mb-8 italic">
-            Every heartbreak has a silver lining—and it's on sale!
+            Every heartbreak has a silver lining — and it's on sale!
           </p>
 
           <div className="bg-gradient-to-br from-pink-50 to-white p-6 rounded-xl shadow-xl mb-8 border border-pink-200">
@@ -184,70 +165,56 @@ function AdsPage() {
                   />
                 </div>
               </div>
-
-              <div>
-                <label
-                  htmlFor="dateFilter"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
-                  Date Posted
-                </label>
-                <select
-                  id="dateFilter"
-                  value={dateFilter}
-                  onChange={(e) => setDateFilter(e.target.value)}
-                  className="w-full px-4 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 outline-none bg-white transition duration-150 ease-in-out text-sm"
-                >
-                  <option value="">All Time</option>
-                  <option value="24h">Last 24 Hours</option>
-                  <option value="7d">Last 7 Days</option>
-                  <option value="30d">Last 30 Days</option>
-                </select>
-              </div>
             </div>
-            <div className="mt-6 flex justify-end">
+            <div className="mt-6 flex gap-3 justify-end">
+              <button
+                onClick={handleSearch}
+                className="bg-pink-500 text-white hover:bg-pink-700 font-semibold py-2 px-4 text-sm rounded-lg shadow-md transition duration-300 ease-in-out"
+              >
+                Search
+              </button>
+
               <button
                 onClick={handleResetFilters}
-                className="bg-pink-500 text-white hover:bg-pink-700 font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out"
+                className="bg-pink-500 text-white text-sm hover:bg-pink-700 font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out"
               >
-                Reset Filters
+                Reset
               </button>
             </div>
           </div>
 
           {ads.length === 0 ? (
-            <p className="text-center text-lg text-pink-500 font-semibold">
-              No advertisements found matching your criteria.
-            </p>
+            <EmptyState
+              title="No Ads Found"
+              message="Try changing filters or keywords to see better results."
+              onReset={handleResetFilters}
+            />
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {ads.map((ad) => (
-                <div
-                  key={ad.id}
+                <Link
+                  to={`/ads/${ad._id}`}
+                  key={ad._id}
                   className="bg-gradient-to-br from-white via-pink-50 to-white relative text-center rounded-xl shadow-lg hover:shadow-xl transition duration-300 border border-pink-100 p-4"
                 >
-                  <Link to={`/ads/${ad.id}`}>
+                  <div className="w-40 h-28 overflow-hidden rounded">
                     <img
                       src={
                         ad.image ||
                         "https://via.placeholder.com/400x250?text=No+Image"
                       }
                       alt={ad.title}
-                      className="w-full h-auto object-cover rounded"
+                      className="w-full h-full object-cover rounded"
                     />
-                  </Link>
+                  </div>
+
                   <div className="p-4 flex flex-col justify-between h-auto">
                     <div>
                       <h3
-                        className="text-xl font-semibold text-gray-800 mb-2 truncate"
+                        className="text-xl font-semibold text-gray-800 mb-2 truncate hover:text-pink-600 transition-colors duration-200"
                         title={ad.title}
                       >
-                        <Link
-                          to={`/ads/${ad.id}`}
-                          className="hover:text-pink-600 transition-colors duration-200"
-                        >
-                          {ad.title}
-                        </Link>
+                        {ad.title}
                       </h3>
                       <p className="text-sm text-gray-600 mb-1 capitalize">
                         Category: {ad.category}
@@ -260,14 +227,11 @@ function AdsPage() {
                       </p>
                     </div>
 
-                    <Link
-                      to={`/ads/${ad.id}`}
-                      className="inline-block bg-pink-500 text-white hover:bg-pink-700 border font-semibold py-1.5 px-4 rounded-full text-sm transition duration-300 ease-in-out"
-                    >
+                    <div className="inline-block bg-pink-500 text-white hover:bg-pink-700 border font-semibold py-1.5 px-4 rounded-full text-sm transition duration-300 ease-in-out">
                       View
-                    </Link>
+                    </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           )}

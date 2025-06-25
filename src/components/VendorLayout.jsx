@@ -16,7 +16,7 @@ const VendorLayout = () => {
         toggleSidebar={toggleSidebar}
       />
       <main
-        className={`flex-1 p-8 transition-all duration-300 ${
+        className={`flex-1 px-8 transition-all duration-300 ${
           isSidebarOpen ? "ml-64" : "ml-16" // Adjust margin based on sidebar width
         }`}
       >

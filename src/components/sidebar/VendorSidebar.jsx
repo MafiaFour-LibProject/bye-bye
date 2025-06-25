@@ -1,120 +1,146 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import CreateAdModal from "../modal/CreateAdModal";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ShoppingBag,
+  LayoutDashboard,
+  PlusCircle,
+} from "lucide-react";
 
 const VendorSidebar = ({ isSidebarOpen, toggleSidebar }) => {
-  // WORK ON THIS!!!!!!!!////////////////////////////
   const navigate = useNavigate();
+  const location = useLocation();
+
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     navigate("/login");
   };
 
+  const handleMessage = () => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      navigate("/login");
+    }
+  };
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const vendorInfo = {
-    name: "Mafia Four",
-    email: "mafia4@gmail.com",
+    name: localStorage.getItem("name") || "Mafia User",
+    email: localStorage.getItem("email") || "mafia@gmail.com",
     profileImage:
       "https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_640.png",
   };
 
+  const navItems = [
+    {
+      name: "Marketplace",
+      path: "/vendor-ads",
+      icon: <ShoppingBag className="w-5 h-5" />,
+    },
+    {
+      name: "Dashboard",
+      path: "/dashboard",
+      icon: <LayoutDashboard className="w-5 h-5" />,
+    },
+  ];
+
+  const isActive = (path) => location.pathname === path;
+
   return (
     <aside
-      className={`fixed mt-10 top-0 left-0 h-full  bg-white text-black flex flex-col p-3 shadow-lg z-40 transition-all duration-300
-        ${isSidebarOpen ? "w-64" : "w-20"}`}
+      className={`fixed top-0  left-0 h-full bg-gradient-to-b from-pink-100 to-pink-50 text-black flex flex-col items-center p-4 shadow-xl z-40 transition-all duration-300 ${
+        isSidebarOpen ? "w-64" : "w-20"
+      }`}
     >
-      <div className="flex justify-between items-center w-full mb-8">
+      {/* Header */}
+      <div className="flex justify-between items-center mb-8 w-full">
         {isSidebarOpen && (
-          <img
-            className="h-[150px] w-[150px] object-cover"
-            src="/images/bb-store-logo2.png"
-            alt="BB Store Logo"
-          />
+          <Link to="/user-ads">
+            <img
+              className="h-[80px] w-[80px] object-contain"
+              src="/images/bb-store-logo2.png"
+              alt="BB Store Logo"
+            />
+          </Link>
         )}
         <button
           onClick={toggleSidebar}
-          className="p-1 rounded-full text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="p-1 rounded-full bg-pink-500 hover:bg-pink-600 focus:outline-none"
           aria-label={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
         >
           {isSidebarOpen ? (
-            <ChevronLeft className="h-6 w-6 text-white bg-pink-600 rounded" />
+            <ChevronLeft className="h-5 w-5 text-white" />
           ) : (
-            <ChevronRight className="h-6 w-6 text-white bg-pink-600" />
+            <ChevronRight className="h-5 w-5 text-white" />
           )}
         </button>
       </div>
 
-      <div className="flex-grow overflow-y-auto overflow-x-hidden">
-        {" "}
-        <nav>
-          <ul>
-            <li className="mb-3">
+      <nav className="flex-grow overflow-y-auto overflow-x-hidden w-full">
+        <ul className="space-y-5">
+          {navItems.map((item) => (
+            <li key={item.name}>
               <Link
-                to="/vendor-ads"
-                className="flex items-center px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-200"
-                title={isSidebarOpen ? "" : "Marketplace"}
+                to={item.path}
+                className={`flex items-center px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  isActive(item.path)
+                    ? "bg-pink-500 text-white"
+                    : "text-pink-700 hover:bg-pink-200 hover:text-pink-900"
+                }`}
+                title={!isSidebarOpen ? item.name : ""}
               >
-                <span className="mr-3 flex-shrink-0">📊</span>{" "}
-                {isSidebarOpen && (
-                  <span className="whitespace-nowrap">Marketplace</span>
-                )}
+                <span className="mr-3">{item.icon}</span>
+                {isSidebarOpen && <span>{item.name}</span>}
               </Link>
             </li>
-            <li className="mb-3">
-              <Link
-                to="/dashboard"
-                className="flex items-center px-4 py-2 rounded-lg hover:bg-gray-700 transition duration-200"
-                title={isSidebarOpen ? "" : "Dashboard"}
-              >
-                <span className="mr-3 flex-shrink-0">🏠</span>{" "}
-                {isSidebarOpen && (
-                  <span className="whitespace-nowrap">Dashboard</span>
-                )}
-              </Link>
-            </li>
-            <li className="mb-3">
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="w-full text-left flex items-center px-4 py-2 rounded-lg bg-white text-black hover:bg-gray-700 hover:text-white  font-semibold transition duration-200"
-                title={isSidebarOpen ? "" : "Create New Ad"}
-              >
-                <span className="mr-3 flex-shrink-0">➕</span>{" "}
-                {isSidebarOpen && (
-                  <span className="whitespace-nowrap">Create New Ad</span>
-                )}
-              </button>
-            </li>
-          </ul>
-        </nav>
-      </div>
+          ))}
 
-      <div className="mt-auto border-t border-gray-700 pt-4 flex items-center justify-center">
-        {isSidebarOpen ? (
-          <div className="flex items-center w-full">
-            <img
-              src={vendorInfo.profileImage}
-              alt="Vendor Profile"
-              className="w-10 h-10 rounded-full mr-3 flex-shrink-0"
-            />
-            <div>
-              <p className="font-semibold whitespace-nowrap">
-                {vendorInfo.name}
-              </p>
-              <p className="text-sm text-gray-400 whitespace-nowrap">
-                {vendorInfo.email}
-              </p>
-            </div>
-          </div>
-        ) : (
+          <li>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="w-full flex items-center px-4 py-2 rounded-lg bg-white text-pink-600 hover:bg-pink-200 hover:text-pink-800 font-medium transition-all duration-200"
+              title={!isSidebarOpen ? "Create New Ad" : ""}
+            >
+              <PlusCircle className="w-5 h-5 mr-3" />
+              {isSidebarOpen && <span>Create New Ad</span>}
+            </button>
+          </li>
+        </ul>
+      </nav>
+
+      <div className="mt-auto pt-4 border-t border-pink-300 w-full">
+        <div className="flex items-center space-x-3 mb-3">
           <img
             src={vendorInfo.profileImage}
             alt="Vendor Profile"
-            className="w-10 h-10 rounded-full"
+            className="w-10 h-10 rounded-full object-cover"
             title={vendorInfo.name}
           />
+          {isSidebarOpen && (
+            <div>
+              <p className="font-semibold text-sm">{vendorInfo.name}</p>
+              <p className="text-xs text-pink-700">{vendorInfo.email}</p>
+            </div>
+          )}
+        </div>
+        {isSidebarOpen ? (
+          <button
+            className="w-full py-2 mt-1 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-all duration-200 text-sm font-semibold"
+            onClick={handleLogout}
+          >
+            Log Out
+          </button>
+        ) : (
+          <button
+            className="w-full mt-2 bg-pink-500 text-white p-1 rounded hover:bg-pink-600"
+            onClick={handleLogout}
+            title="Log Out"
+          >
+            Logout
+          </button>
         )}
       </div>
 
@@ -122,9 +148,6 @@ const VendorSidebar = ({ isSidebarOpen, toggleSidebar }) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
       />
-      <button className="bg-pink-500" onClick={handleLogout}>
-        Log Out
-      </button>
     </aside>
   );
 };
