@@ -7,11 +7,9 @@ import AdsPage from "./pages/AdsPage";
 import AdDetails from "./pages/AdDetails";
 import Dashboard from "./pages/Dashboard";
 import VendorLayout from "./components/VendorLayout";
-import UserLayout from "./components/UserLayout";
 import AboutUsPage from "./pages/AboutUsPage";
-import UserNavbar from "./components/UserNavbar";
 import "./App.css";
-import Footer from "./components/Footer";
+import UserLayout from "./components/UserLayout";
 
 function App() {
   const router = createBrowserRouter([
@@ -40,28 +38,23 @@ function App() {
         },
       ],
     },
-    // {
-    //   element: <UserLayout />,
-    //   children: [
-    //     {
-    //       path: "/user-ads",
-    //       element: <AdsPage />,
-    //     },
-    //   ],
-    // },
+    {
+      element: <UserLayout />,
+      children: [
+        {
+          path: "/user-ads",
+          element: <AdsPage />,
+        },
+        {
+          path: "/ads/:id",
+          element: <AdDetails />,
+        },
 
-    {
-      path: "/user-ads",
-      element: <AdsPage />,
-    },
-    {
-      path: "/ads/:id",
-      element: <AdDetails />,
-    },
-
-    {
-      path: "/about",
-      element: <AboutUsPage />,
+        {
+          path: "/about",
+          element: <AboutUsPage />,
+        },
+      ],
     },
   ]);
 

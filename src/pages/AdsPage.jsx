@@ -176,7 +176,7 @@ function AdsPage() {
 
               <button
                 onClick={handleResetFilters}
-                className="bg-pink-500 text-white text-sm hover:bg-pink-700 font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out"
+                className="bg-white border border-pink-500 text-pink-500 text-sm hover:bg-pink-700 hover:text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out"
               >
                 Reset
               </button>
