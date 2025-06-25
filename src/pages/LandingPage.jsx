@@ -1,6 +1,9 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; 
 
 const HeroSection = () => {
+  const navigate = useNavigate(); 
+
   return (
     <div className="relative w-full">
       <video
@@ -10,18 +13,23 @@ const HeroSection = () => {
         loop
         playsInline
       >
-        <source src="/Vid2.mp4" type="video/mp4" />
-        
+        <source src="/Vid6.mp4" type="video/mp4" />
       </video>
 
-     
-      <div className="absolute inset-0    git push --set-upstream origin navbar flex flex-col items-center justify-center text-orange-600 p-4">
-        <h1 className="text-9xl font-bold mb-2 ">B-BStore</h1>
-        <p className="text-black     text-center mb-4 max-w-md text-2xl">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Incidunt,
-          dolorem!
+      {/* Overlay */}
+      <div
+        className="absolute inset-0 flex flex-col items-center justify-center text-pink-600 px-4 text-center bg-black/30"
+      >
+        <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold mb-4">
+          BYE-BYE STORE
+        </h1>
+        <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-black bg-pink-200/30 font-extrabold rounded px-3 py-2 mt-2">
+          Shop Like He Never Happened — Luxe for Less.
         </p>
-        <button className="px-6 py-3 bg-orange-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75 mt-20  mr-200 ">
+        <button
+          onClick={() => navigate("/user-ads")}
+          className="mt-8 px-5 py-3 bg-pink-600 text-white font-semibold rounded-lg shadow-md hover:bg-pink-400 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-opacity-75"
+        >
           Get Started
         </button>
       </div>

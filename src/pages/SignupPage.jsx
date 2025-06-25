@@ -41,10 +41,7 @@ const SignupPage = () => {
   return (
     <div className="my-[30px] mx-[200px] flex flex-col md:flex-row items-center justify-center px-6 py-10 bg-white shadow-2xl rounded-2xl ">
       <div className="w-full md:w-1/2 max-w-md mt-9">
-        <h2
-          style={{ color: "#E74C3C" }}
-          className="font-bold text-4xl text-center  justify-center mb-9"
-        >
+        <h2 className="font-bold text-4xl text-center   text-pink-600 justify-center mb-9">
           Get Started
         </h2>
 
@@ -57,7 +54,7 @@ const SignupPage = () => {
               Name
             </label>
             <input
-              className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-3"
+              className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-3 "
               type="text"
               placeholder="Name"
               id="name"
@@ -96,10 +93,10 @@ const SignupPage = () => {
               />
             </div> */}
 
-            <div className="flex flex-col space-y-2 w-2xl">
+            <div className="flex flex-col space-y-2 w-2xl  mt-1">
               <label htmlFor="Gender">Role</label>
               <select
-                className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-3 text-gray-500 w-full"
+                className="text-base border border-gray-300 bg-gray-50 rounded py-2 px-3 text-gray-500 w-full "
                 id="role"
                 {...register("role", { required: "role is required" })}
               >
@@ -110,7 +107,7 @@ const SignupPage = () => {
           </div>
 
           <div className="flex flex-col space-y-2">
-            <label htmlFor="email" className="text-base font-medium">
+            <label htmlFor="email  mt-1" className="text-base font-medium">
               Email
             </label>
             <input
@@ -122,7 +119,7 @@ const SignupPage = () => {
             />
           </div>
 
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2  mt-2">
             <label htmlFor="password" className="text-base font-medium">
               Create Password
             </label>
@@ -160,17 +157,17 @@ const SignupPage = () => {
             disabled={isError}
             onClick={handleSubmit}
             className={`${
-              isError ? "bg-gray-300 cursor-not-allowed" : "bg-[#E74C3C]"
-            }  "w-full text-white font-semibold text-base py-2  px-3`}
+              isError ? "bg-gray-300 cursor-not-allowed  " : "bg-pink-600 hover:bg-pink-500   "
+            }  "w-full text-white  mt-4  cursor-pointer md:items-center font-semibold  py-2 px-6 rounded-sm`}
           >
             {isSubmitting ? "Submitting...." : " Sign Up"}
           </button>
 
-          <p className="text-base text-center">
+          <p className="text-base text-center mt-2  mr-30">
             Already have an account?&nbsp;
             <span
-              style={{ color: "#E74C3C" }}
-              className="font-medium cursor-pointer"
+            onClick={()=>navigate("/login")}
+              className="font-medium cursor-pointer text-pink-700 hover:underline"
             >
               Log in
             </span>
@@ -180,9 +177,9 @@ const SignupPage = () => {
 
       <div className="hidden md:block md:w-1/2">
         <img
-          className="w-full h-auto object-cover max-h-[600px] rounded-2xl"
+          className="w-full h-auto object-cover max-h-[600px] rounded-2xl cursor-pointer "
           src="/Black1.jpg"
-          alt="Sign Up"
+          alt="black"
         />
       </div>
     </div>
