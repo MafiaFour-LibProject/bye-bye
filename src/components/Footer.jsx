@@ -5,10 +5,9 @@ const Footer = () => {
   return (
     <footer className="w-full bg-pink-50 text-pink-900 border-t border-pink-200">
       <div className="max-w-screen-2xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-        {/* Logo */}
         <div className="flex items-center space-x-3">
           <img
-            src="/images/bb-store-logo2.png"
+            src="/images/bb-store-logo3.png"
             alt="BB Store Logo"
             className="h-[60px] w-auto object-contain"
           />
