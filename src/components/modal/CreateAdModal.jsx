@@ -1,246 +1,164 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { X } from "lucide-react";
+import { apiCreatedAd } from "../../services/advert";
 
-const categories = [
-  "Electronics",
-  "Vehicles",
-  "Home Appliances",
-  "Fashion",
-  "Sports",
-  "Books",
-  "Other",
-];
+const categories = ["Jewellery", "Perfume", "Beauty", "Fashion", "Other"];
 
-function CreateAdModal({ isOpen, onClose, onAdCreated }) {
-  // Added onAdCreated prop
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
-  const [condition, setCondition] = useState("");
-  const [image, setImage] = useState("");
-  const [available, setAvailable] = useState(true);
+const CreateAdModal = ({ isOpen, onClose, onAdCreated }) => {
+  const [uploading, setUploading] = useState(false);
+  const { register, handleSubmit, reset } = useForm();
+  const [file, setFile] = useState(null);
+
+  const handleChange = (e) => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  };
 
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-      document.body.style.overflow = "unset";
-    }
+    if (isOpen) document.body.style.overflow = "hidden";
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
-  if (!isOpen) return null;
+  const onSubmit = async (data) => {
+    const payload = new FormData();
+    payload.append("title", data.title);
+    payload.append("description", data.description);
+    payload.append("price", data.price);
+    payload.append("category", data.category);
+    payload.append("condition", data.condition);
+    payload.append("available", data.available);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (file && file.name) {
+      payload.append("image", file);
+    }
 
-    const newAd = {
-      title,
-      description,
-      price: parseFloat(price),
-      category,
-      condition,
-      image,
-      available,
-      vendorId: "vendor123",
-      createdAt: new Date().toISOString(),
-    };
+    console.log(data);
 
     try {
-      const response = await axios.post("http://localhost:5000/ads", newAd);
+      setUploading(true);
+      const response = await apiCreatedAd(payload);
+      console.log(response.data);
 
       if (response.status === 201) {
         alert("Advert posted successfully!");
         onClose();
-        setTitle("");
-        setDescription("");
-        setPrice("");
-        setCategory("");
-        setCondition("");
-        setImage("");
-        setAvailable(true);
-        if (onAdCreated) {
-          // Notify parent component that a new ad was created
-          onAdCreated();
-        }
+        reset();
+        onAdCreated?.();
       } else {
-        alert("Failed to post ad.");
+        alert("Failed to post advert.");
       }
     } catch (error) {
       console.error("Error posting ad:", error);
-      alert("An error occurred while posting the ad.");
+      alert("An error occurred while posting the advert.");
+    } finally {
+      setUploading(false);
     }
   };
 
   const handleOverlayClick = (e) => {
-    if (e.target.id === "modal-overlay") {
-      onClose();
-    }
+    if (e.target.id === "modal-overlay") onClose();
   };
+
+  if (!isOpen) return null;
 
   return (
     <div
       id="modal-overlay"
-      className="fixed inset-0 bg-black/30 backdrop-black flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4"
       onClick={handleOverlayClick}
     >
-      <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-lg relative max-h-[90vh] overflow-y-auto">
-        <h2 className="text-2xl font-bold mb-4 text-gray-800">
-          Create New Advertisement
-        </h2>
-        <button
-          onClick={onClose}
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-2xl"
-          aria-label="Close modal"
-        >
-          &times;
-        </button>
+      <div className="bg-white p-6 rounded-xl shadow-2xl w-full max-w-md relative border border-pink-200">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-pink-600">New Advertisement</h2>
+          <button
+            onClick={onClose}
+            className="text-gray-500 hover:text-pink-600"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label
-              htmlFor="title"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Title
-            </label>
-            <input
-              type="text"
-              id="title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
-            />
-          </div>
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 text-sm">
+          <input
+            type="text"
+            placeholder="Title"
+            {...register("title", { required: true })}
+            className="w-full px-3 py-1.5 text-black border border-pink-300 rounded-md focus:ring-pink-400 focus:outline-none focus:ring-1"
+          />
+          <textarea
+            placeholder="Short Description"
+            {...register("description", { required: true })}
+            rows="3"
+            className="w-full px-3 py-1.5 text-black border border-pink-300 rounded-md focus:ring-pink-400 focus:outline-none focus:ring-1"
+          />
+          <input
+            type="number"
+            placeholder="Price ($)"
+            {...register("price", { required: true, min: 0 })}
+            className="w-full px-3 py-1.5 text-black border border-pink-300 rounded-md focus:ring-pink-400 focus:outline-none focus:ring-1"
+            step="0.01"
+          />
 
-          <div>
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Description
-            </label>
-            <textarea
-              id="description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows="4"
-              className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
-            ></textarea>
-          </div>
-
-          <div>
-            <label
-              htmlFor="price"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Price ($)
-            </label>
-            <input
-              type="number"
-              id="price"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
-              min="0"
-              step="0.01"
-            />
-          </div>
-
-          <div>
-            <label
-              htmlFor="category"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Category
-            </label>
+          <div className="flex space-x-2">
             <select
-              id="category"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
+              {...register("category", { required: true })}
+              className="w-1/2 px-2 py-1.5 text-black border border-pink-300 rounded-md focus:ring-pink-400 focus:outline-none focus:ring-1"
             >
-              <option value="">Select a Category</option>
+              <option value="">Category</option>
               {categories.map((cat) => (
                 <option key={cat} value={cat}>
                   {cat}
                 </option>
               ))}
             </select>
-          </div>
 
-          <div>
-            <label
-              htmlFor="condition"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Condition
-            </label>
             <select
-              id="condition"
-              value={condition}
-              onChange={(e) => setCondition(e.target.value)}
-              className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
+              {...register("condition", { required: true })}
+              className="w-1/2 px-2 py-1.5 text-black border border-pink-300 rounded-md focus:ring-pink-400 focus:outline-none focus:ring-1"
             >
-              <option value="">Select Condition</option>
               <option value="new">New</option>
               <option value="like-new">Like New</option>
-              <option value="slightly-used">Slightly Used</option>
-              <option value="used">Used</option>
+              <option value="good">Good</option>
+              <option value="fair">Fair</option>
+              <option value="poor">Poor</option>
             </select>
           </div>
 
-          <div>
-            <label
-              htmlFor="image"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Image URL (for demo)
-            </label>
-            <input
-              type="url"
-              id="image"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-              placeholder="e.g., https://example.com/image.jpg"
-              className="text-black mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-              required
-            />
-          </div>
+          <input
+            type="file"
+            {...register("image")}
+            onChange={handleChange}
+            accept="image/*"
+            className="w-full px-3 py-1.5 text-black border border-pink-300 rounded-md focus:ring-pink-400 focus:outline-none focus:ring-1"
+          />
 
-          <div className="flex items-center">
+          <label className="flex items-center space-x-2 text-gray-600 text-sm">
             <input
               type="checkbox"
-              id="available"
-              checked={available}
-              onChange={(e) => setAvailable(e.target.checked)}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              {...register("available")}
+              defaultChecked
+              className="h-4 w-4 text-pink-500 border-gray-300 rounded focus:ring-pink-400"
             />
-            <label
-              htmlFor="available"
-              className="ml-2 block text-sm text-gray-900"
-            >
-              Available for sale
-            </label>
-          </div>
+            <span>Available for sale</span>
+          </label>
 
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md shadow-md transition duration-300 ease-in-out"
+            disabled={uploading}
+            className={`w-full bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-4 rounded-md shadow transition duration-200 ${
+              uploading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
-            Post Advert
+            {uploading ? "Uploading..." : "Post Advert"}
           </button>
         </form>
       </div>
     </div>
   );
-}
+};
 
 export default CreateAdModal;

@@ -26,6 +26,9 @@ function App() {
       const res = await ApiLogin(payload);
       console.log(res);
       localStorage.setItem("accessToken", res.data.token);
+      localStorage.setItem("name", res.data.user.name);
+      localStorage.setItem("email", res.data.user.email);
+
       const userRole = res.data.user.role;
       toast.success("Login successful!");
 
@@ -34,8 +37,6 @@ function App() {
       } else {
         navigate("/user-ads");
       }
-
-      navigate("/user-ads");
     } catch (error) {
       console.error(error);
       toast.error(error?.message || "Oops! An error occurred.");
