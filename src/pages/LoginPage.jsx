@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { ApiLogin } from "../services/auth";
 import { toast } from "react-toastify";
 
@@ -48,18 +48,17 @@ function App() {
   return (
     <div className="bg-neutral-200 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
       <div className="bg-white rounded-lg shadow-xl flex flex-col md:flex-row max-w-5xl w-full overflow-hidden">
-        
         {/* Left Image */}
         <div className="md:w-1/2 hidden md:block">
           <img
-            src="/Black4.jpg"
+            src="/Black9.jpg"
             alt="Login visual"
             className="object-cover w-full h-full rounded-l-lg"
           />
         </div>
 
         {/* Form Section */}
-        <div className="w-full md:w-1/2 p-6 sm:p-10">
+        <div className="w-full mt-6 md:w-1/2 p-6 sm:p-10">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-pink-600 text-center mb-4">
             Bye-Bye Store
           </h2>
@@ -116,10 +115,10 @@ function App() {
             <button
               type="submit"
               disabled={isSubmitting || isError}
-              className={`w-full py-3 font-bold rounded-md transition transform ${
+              className={`w-full py-2 mt-5 font-bold rounded-md transition transform ${
                 isSubmitting || isError
                   ? "bg-gray-300 cursor-not-allowed"
-                  : "bg-pink-600 text-white hover:bg-pink-500 hover:scale-105"
+                  : "bg-pink-600 text-white hover:bg-pink-500 hover:scale-105 "
               }`}
             >
               {isSubmitting ? "Submitting..." : "Log In"}
@@ -129,13 +128,13 @@ function App() {
           {/* Footer Actions */}
           <div className="mt-6 flex flex-col items-center text-sm">
             <a href="#" className="text-pink-500 hover:underline mb-2">
-              Forgot password?
+              Don't have an account?
             </a>
-            <span className="text-gray-500 mb-2">or</span>
+            {/* <span className="text-gray-500 mb-2">or</span> */}
             <button
               type="button"
               onClick={() => navigate("/signup")}
-              className="w-full bg-pink-600 text-white font-bold py-2 px-4 rounded-md hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:ring-offset-2 transition transform hover:scale-105"
+              className="w-full bg-pink-600 text-white mt-5 font-bold py-3 rounded-md hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-pink-300 focus:ring-offset-2 transition transform hover:scale-105"
             >
               Create New Account
             </button>

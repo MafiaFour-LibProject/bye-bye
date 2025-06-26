@@ -53,7 +53,7 @@ function AdsPage() {
   }, []);
 
   const handleSearch = () => {
-    fetchAds();
+    fetchAds(); 
   };
 
   const handleResetFilters = () => {

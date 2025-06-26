@@ -41,9 +41,12 @@ const SignupPage = () => {
   return (
     <div className="my-[30px] mx-[200px] flex flex-col md:flex-row items-center justify-center px-6 py-10 bg-white shadow-2xl rounded-2xl ">
       <div className="w-full md:w-1/2 max-w-md mt-9">
-        <h2 className="font-bold text-4xl text-center   text-pink-600 justify-center mb-9">
-          Get Started
+        <h2 className="text-3xl sm:text-4xl font-extrabold text-pink-600 text-center mb-4">
+          Bye-Bye Store
         </h2>
+        <p className="text-gray-600 text-base sm:text-lg text-center mb-6">
+          Get Started
+        </p>
 
         <form
           className=" h-screen p-[20px] w-full object-cover rounded-lg space-y-2"
@@ -157,16 +160,18 @@ const SignupPage = () => {
             disabled={isError}
             onClick={handleSubmit}
             className={`${
-              isError ? "bg-gray-300 cursor-not-allowed  " : "bg-pink-600 hover:bg-pink-500   "
+              isError
+                ? "bg-gray-300 cursor-not-allowed  "
+                : "bg-pink-600 hover:bg-pink-500   "
             }  "w-full text-white  mt-4  cursor-pointer md:items-center font-semibold  py-2 px-6 rounded-sm`}
           >
             {isSubmitting ? "Submitting...." : " Sign Up"}
           </button>
 
-          <p className="text-base text-center mt-2  mr-30">
+          <p className="text-base text-center justify-center mt-2 mr-40">
             Already have an account?&nbsp;
             <span
-            onClick={()=>navigate("/login")}
+              onClick={() => navigate("/login")}
               className="font-medium cursor-pointer text-pink-700 hover:underline"
             >
               Log in

@@ -11,9 +11,9 @@ const Navbar = () => {
   const token = localStorage.getItem("accessToken");
   const vendorInfo = {
     name: localStorage.getItem("name") || "Mafia User",
-    email: localStorage.getItem("email") || "mafia@gmail.com",
-    profileImage:
-      "https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_640.png",
+    email: localStorage.getItem("email") || "mafia@gmail.com", 
+    profileImage: 
+      "https://cdn.pixabay.com/photo/2019/08/11/18/59/icon-4399701_640.png", 
   };
 
   return (
@@ -54,11 +54,11 @@ const Navbar = () => {
             </button>
           </>
         ) : (
-          <div className="flex gap-3 items-center justify-center">
+          <div className="flex gap-3 items-center justify-center bg-pink-500 cursor-pointer hover:bg-pink-700 px-4 rounded-2xl">
             <img
               src={vendorInfo.profileImage}
               alt="Vendor Profile"
-              className="w-10 h-10 rounded-full object-cover"
+              className="w-10 h-10 rounded-full object-cover "
               title={vendorInfo.name}
               onClick={handleLogout}
             />

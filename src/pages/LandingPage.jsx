@@ -13,7 +13,7 @@ const HeroSection = () => {
         loop
         playsInline
       >
-        <source src="/Vid6.mp4" type="video/mp4" />
+        <source src="/Vid4.mp4" type="video/mp4" />
       </video>
 
       {/* Overlay */}
