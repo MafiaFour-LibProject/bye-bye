@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { X } from "lucide-react";
 import { apiCreatedAd } from "../../services/advert";
+import { toast } from "react-toastify";
 
 const categories = ["Jewellery", "Perfume", "Beauty", "Fashion", "Other"];
 
@@ -30,7 +31,7 @@ const CreateAdModal = ({ isOpen, onClose, onAdCreated }) => {
     payload.append("price", data.price);
     payload.append("category", data.category);
     payload.append("condition", data.condition);
-    payload.append("available", data.available);
+    payload.append("available", data.available === true ? "true" : "false");
 
     if (file && file.name) {
       payload.append("image", file);
@@ -41,19 +42,19 @@ const CreateAdModal = ({ isOpen, onClose, onAdCreated }) => {
     try {
       setUploading(true);
       const response = await apiCreatedAd(payload);
-      console.log(response.data);
+      console.log(response);
 
       if (response.status === 201) {
-        alert("Advert posted successfully!");
+        toast.success("Advert posted successfully!");
         onClose();
         reset();
         onAdCreated?.();
       } else {
-        alert("Failed to post advert.");
+        toast.error("Failed to post advert.");
       }
     } catch (error) {
-      console.error("Error posting ad:", error);
-      alert("An error occurred while posting the advert.");
+      // console.error("Error posting ad:", error);
+      toast.error("An error occurred while posting the advert.");
     } finally {
       setUploading(false);
     }

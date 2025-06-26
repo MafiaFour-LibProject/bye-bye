@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { ApiLogin } from "../services/auth";
 import { toast } from "react-toastify";
 
@@ -48,7 +48,6 @@ function App() {
   return (
     <div className="bg-neutral-200 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
       <div className="bg-white rounded-lg shadow-xl flex flex-col md:flex-row max-w-5xl w-full overflow-hidden">
-        
         {/* Left Image */}
         <div className="md:w-1/2 hidden md:block">
           <img

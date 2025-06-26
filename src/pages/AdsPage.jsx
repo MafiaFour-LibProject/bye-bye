@@ -3,7 +3,6 @@ import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import PagesLayout from "../components/PagesLayout";
-import { View } from "lucide-react";
 import { apiFetchAdverts } from "../services/advert";
 import EmptyState from "../components/EmptyState";
 
@@ -61,6 +60,7 @@ function AdsPage() {
     setSelectedCategory("");
     setMinPrice("");
     setMaxPrice("");
+    fetchAds();
   };
 
   if (loading)
@@ -190,42 +190,40 @@ function AdsPage() {
               onReset={handleResetFilters}
             />
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 items-center justify-center sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {ads.map((ad) => (
                 <Link
                   to={`/ads/${ad._id}`}
                   key={ad._id}
-                  className="bg-gradient-to-br from-white via-pink-50 to-white relative text-center rounded-xl shadow-lg hover:shadow-xl transition duration-300 border border-pink-100 p-4"
+                  className="bg-gradient-to-br from-white via-pink-50 to-white relative rounded-xl shadow-lg transition transform duration-300 border border-pink-100 hover:border-pink-300 hover:-translate-y-1 hover:shadow-xl p-4 flex flex-col items-center justify-center text-center"
                 >
-                  <div className="w-40 h-28 overflow-hidden rounded">
-                    <img
-                      src={
-                        ad.image ||
-                        "https://via.placeholder.com/400x250?text=No+Image"
-                      }
-                      alt={ad.title}
-                      className="w-full h-full object-cover rounded"
-                    />
-                  </div>
+                  {/* <div className="w-40 h-28 overflow-hidden rounded flex items-center justify-center bg-white"> */}
+                  <img
+                    src={
+                      ad.image ||
+                      "https://via.placeholder.com/400x250?text=No+Image"
+                    }
+                    alt={ad.title}
+                    className="w-[250px] h-[250px] object-cover rounded"
+                  />
+                  {/* </div> */}
 
-                  <div className="p-4 flex flex-col justify-between h-auto">
-                    <div>
-                      <h3
-                        className="text-xl font-semibold text-gray-800 mb-2 truncate hover:text-pink-600 transition-colors duration-200"
-                        title={ad.title}
-                      >
-                        {ad.title}
-                      </h3>
-                      <p className="text-sm text-gray-600 mb-1 capitalize">
-                        Category: {ad.category}
-                      </p>
-                      <p className="text-sm text-gray-600 mb-2 capitalize">
-                        Condition: {ad.condition?.replace("-", " ") || "N/A"}
-                      </p>
-                      <p className="text-sm font-bold text-pink-600 mb-3">
-                        ${ad.price?.toFixed(2) || "N/A"}
-                      </p>
-                    </div>
+                  <div className="p-4 flex flex-col justify-between items-center w-full">
+                    <h3
+                      className="text-xl font-semibold text-gray-800 mb-2 truncate hover:text-pink-600 transition-colors duration-200"
+                      title={ad.title}
+                    >
+                      {ad.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-1 capitalize">
+                      Category: {ad.category}
+                    </p>
+                    <p className="text-sm text-gray-600 mb-2 capitalize">
+                      Condition: {ad.condition?.replace("-", " ") || "N/A"}
+                    </p>
+                    <p className="text-sm font-bold text-pink-600 mb-3">
+                      ${ad.price?.toFixed(2) || "N/A"}
+                    </p>
 
                     <div className="inline-block bg-pink-500 text-white hover:bg-pink-700 border font-semibold py-1.5 px-4 rounded-full text-sm transition duration-300 ease-in-out">
                       View
