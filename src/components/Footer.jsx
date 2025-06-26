@@ -5,42 +5,38 @@ const Footer = () => {
   return (
     <footer className="w-full bg-pink-50 text-pink-900 border-t border-pink-200">
       <div className="max-w-screen-2xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between space-y-6 md:space-y-0">
-        {/* Logo */}
         <div className="flex items-center space-x-3">
-          <img
-            src="/images/bb-store-logo2.png"
-            alt="BB Store Logo"
-            className="h-[60px] w-auto object-contain"
-          />
           <p className="text-sm font-semibold hidden md:block">
-            BB Store © {new Date().getFullYear()}
+            Bye-Bye Store © {new Date().getFullYear()}
           </p>
         </div>
 
-        {/* Navigation */}
         <nav>
           <ul className="flex gap-6 font-medium text-sm">
             <li>
-              <Link to="/" className="hover:text-pink-600 transition-colors">
+              <Link
+                to="/user-ads"
+                className="hover:text-pink-600 transition-colors"
+              >
                 Home
               </Link>
             </li>
             <li>
               <Link
-                to="/marketplace"
+                to="/about"
                 className="hover:text-pink-600 transition-colors"
               >
-                Marketplace
+                About Us
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="/contact"
                 className="hover:text-pink-600 transition-colors"
               >
                 Contact
               </Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
 
