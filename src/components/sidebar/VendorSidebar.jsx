@@ -18,13 +18,6 @@ const VendorSidebar = ({ isSidebarOpen, toggleSidebar }) => {
     navigate("/login");
   };
 
-  const handleMessage = () => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) {
-      navigate("/login");
-    }
-  };
-
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const vendorInfo = {
@@ -51,12 +44,15 @@ const VendorSidebar = ({ isSidebarOpen, toggleSidebar }) => {
 
   return (
     <aside
-      className={`fixed top-0  left-0 h-full bg-gradient-to-b from-pink-100 to-pink-50 text-black flex flex-col items-center p-4 shadow-xl z-40 transition-all duration-300 ${
+      className={`fixed top-0 left-0 h-full bg-gradient-to-b from-pink-100 to-pink-50 text-black flex flex-col items-center px-4 pb-4 shadow-xl z-40 transition-all duration-300 ${
         isSidebarOpen ? "w-64" : "w-20"
       }`}
     >
-      {/* Header */}
-      <div className="flex justify-between items-center mb-8 w-full">
+      <div
+        className={`flex ${
+          isSidebarOpen ? "justify-between" : "justify-center"
+        } items-center mb-8 w-full`}
+      >
         {isSidebarOpen && (
           <Link to="/user-ads">
             <img
@@ -66,17 +62,19 @@ const VendorSidebar = ({ isSidebarOpen, toggleSidebar }) => {
             />
           </Link>
         )}
-        <button
-          onClick={toggleSidebar}
-          className="p-1 rounded-full bg-pink-500 hover:bg-pink-600 focus:outline-none"
-          aria-label={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
-        >
-          {isSidebarOpen ? (
-            <ChevronLeft className="h-5 w-5 text-white" />
-          ) : (
-            <ChevronRight className="h-5 w-5 text-white" />
-          )}
-        </button>
+        <div className="flex items-center justify-center h-10 w-10">
+          <button
+            onClick={toggleSidebar}
+            className="p-1 rounded-full bg-pink-500 hover:bg-pink-600 focus:outline-none"
+            aria-label={isSidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
+          >
+            {isSidebarOpen ? (
+              <ChevronLeft className="h-5 w-5 text-white" />
+            ) : (
+              <ChevronRight className="h-5 w-5 text-white" />
+            )}
+          </button>
+        </div>
       </div>
 
       <nav className="flex-grow overflow-y-auto overflow-x-hidden w-full">
@@ -93,7 +91,17 @@ const VendorSidebar = ({ isSidebarOpen, toggleSidebar }) => {
                 title={!isSidebarOpen ? item.name : ""}
               >
                 <span className="mr-3">{item.icon}</span>
-                {isSidebarOpen && <span>{item.name}</span>}
+                {isSidebarOpen && (
+                  <span
+                    className={`transition-all duration-300 ease-in-out overflow-hidden whitespace-nowrap ${
+                      isSidebarOpen
+                        ? "opacity-100 ml-3 max-w-[200px]"
+                        : "opacity-0 ml-0 max-w-0"
+                    }`}
+                  >
+                    {item.name}
+                  </span>
+                )}
               </Link>
             </li>
           ))}
@@ -101,11 +109,13 @@ const VendorSidebar = ({ isSidebarOpen, toggleSidebar }) => {
           <li>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="w-full flex items-center px-4 py-2 rounded-lg bg-white text-pink-600 hover:bg-pink-200 hover:text-pink-800 font-medium transition-all duration-200"
+              className={`w-full flex items-center ${
+                isSidebarOpen ? "justify-start" : "justify-center"
+              } px-4 py-2 rounded-lg bg-white text-pink-600 hover:bg-pink-200 hover:text-pink-800 font-medium transition-all duration-200`}
               title={!isSidebarOpen ? "Create New Ad" : ""}
             >
-              <PlusCircle className="w-5 h-5 mr-3" />
-              {isSidebarOpen && <span>Create New Ad</span>}
+              <PlusCircle className="w-5 h-5" />
+              {isSidebarOpen && <span className="ml-3">Create New Ad</span>}
             </button>
           </li>
         </ul>
@@ -126,20 +136,12 @@ const VendorSidebar = ({ isSidebarOpen, toggleSidebar }) => {
             </div>
           )}
         </div>
-        {isSidebarOpen ? (
+        {isSidebarOpen && (
           <button
             className="w-full py-2 mt-1 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-all duration-200 text-sm font-semibold"
             onClick={handleLogout}
           >
             Log Out
-          </button>
-        ) : (
-          <button
-            className="w-full mt-2 bg-pink-500 text-white p-1 rounded hover:bg-pink-600"
-            onClick={handleLogout}
-            title="Log Out"
-          >
-            Logout
           </button>
         )}
       </div>

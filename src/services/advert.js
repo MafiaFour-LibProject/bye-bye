@@ -19,7 +19,7 @@ export const apiDeleteAdvert = async (id) => apiClient.delete(`/adverts/${id}`);
 //add a new advert
 export const apiCreatedAd = async (payload) =>
   apiClient.post("/adverts", payload, {
-    // headers: {
-    //   "Content-Type": "multipart/form-data",
-    // },
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   });

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import PagesLayout from "../components/PagesLayout";
 import CreateAdModal from "../components/modal/CreateAdModal";
+import { toast } from "react-toastify";
 import {
   apiDeleteAdvert,
   apiFetchVendorAdverts,
@@ -52,10 +52,10 @@ const Dashboard = () => {
     // if (!window.confirm("Are you sure you want to delete this advert?")) return;
     try {
       await apiDeleteAdvert(id);
-      alert("Advert deleted successfully!");
+      toast.success("Ad deleted successfully!");
       fetchVendorAds();
     } catch {
-      alert("Error deleting advert.");
+      toast.error("Error deleting ad.");
     }
   };
 
@@ -138,13 +138,13 @@ const Dashboard = () => {
                     <td className="px-6 py-4 text-sm font-medium">
                       <button
                         onClick={() => setEditingAd(ad)}
-                        className="text-indigo-600 hover:text-indigo-900 mr-4"
+                        className="text-indigo-600 cursor-pointer hover:text-indigo-900 mr-4"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(ad._id)}
-                        className="text-red-600 hover:text-red-900"
+                        className="text-red-600 cursor-pointer hover:text-red-900"
                       >
                         Delete
                       </button>
@@ -208,10 +208,10 @@ const EditAdForm = ({ ad, onClose }) => {
     try {
       await apiUpdateAdvert(ad._id, data);
 
-      alert("Advert updated successfully!");
+      toast.success("Ad updated successfully!");
       onClose();
     } catch {
-      alert("Error updating advert.");
+      toast.error("Error updating ad.");
     }
   };
 
