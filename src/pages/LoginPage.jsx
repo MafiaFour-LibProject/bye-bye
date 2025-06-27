@@ -48,7 +48,6 @@ function App() {
   return (
     <div className="bg-neutral-200 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
       <div className="bg-white rounded-lg shadow-xl flex flex-col md:flex-row max-w-5xl w-full overflow-hidden">
-        {/* Left Image */}
         <div className="md:w-1/2 hidden md:block">
           <img
             src="/Black9.jpg"
@@ -56,8 +55,6 @@ function App() {
             className="object-cover w-full h-full rounded-l-lg"
           />
         </div>
-
-        {/* Form Section */}
         <div className="w-full mt-6 md:w-1/2 p-6 sm:p-10">
           <h2 className="text-3xl sm:text-4xl font-extrabold text-pink-600 text-center mb-4">
             Bye-Bye Store
@@ -67,7 +64,6 @@ function App() {
           </p>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            {/* Email Input */}
             <div>
               <label
                 htmlFor="email"
@@ -88,8 +84,6 @@ function App() {
                 </p>
               )}
             </div>
-
-            {/* Password Input */}
             <div>
               <label
                 htmlFor="password"
@@ -110,8 +104,6 @@ function App() {
                 </p>
               )}
             </div>
-
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isSubmitting || isError}
@@ -124,8 +116,6 @@ function App() {
               {isSubmitting ? "Submitting..." : "Log In"}
             </button>
           </form>
-
-          {/* Footer Actions */}
           <div className="mt-6 flex flex-col items-center text-sm">
             <a href="#" className="text-pink-500 hover:underline mb-2">
               Don't have an account?
