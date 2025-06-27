@@ -6,7 +6,7 @@ const UserLayout = () => {
   return (
     <div>
       <Navbar />
-      <div className="mt-15">
+      <div className="mt-20">
         {" "}
         <Outlet />
       </div>

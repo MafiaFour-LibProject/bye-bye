@@ -16,7 +16,7 @@ const AdDetails = () => {
   const handleMessage = () => {
     const token = localStorage.getItem("accessToken");
     if (!token) {
-      setShowLoginPrompt(true); // Show the prompt instead of navigating right away
+      setShowLoginPrompt(true);
     } else {
       setShowMessageModal(true);
     }

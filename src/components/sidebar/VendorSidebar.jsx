@@ -56,7 +56,7 @@ const VendorSidebar = ({ isSidebarOpen, toggleSidebar }) => {
         {isSidebarOpen && (
           <Link to="/user-ads">
             <img
-              className="h-[80px] w-[80px] object-contain"
+              className="h-[70px] w-[70px] object-contain"
               src="/images/bb-store-logo2.png"
               alt="BB Store Logo"
             />
